@@ -3,13 +3,17 @@
 const express = require("express");
 const morgan = require("morgan");
 
+morgan.token("data", (req, res) => {
+  return JSON.stringify(req.body);
+})
+
 const { data } = require("./data.js");
 let contacts = data;
 
 const app = express();
 
 app.use(express.json());
-app.use(morgan("tiny"))
+app.use(morgan(":method :url :status :res[content-length] - :response-time ms :data "));
 
 app.get("/", (_req, res) => {
   res.send("<h1>Welcome to Phonebook Application");
