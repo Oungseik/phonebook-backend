@@ -43,6 +43,10 @@ const generateID = () => {
   return id + 1;
 }
 
+/** @type {(name: string) => {name: string, number: string, id: number } | undefined } */
+const isPersonExist = name =>
+  contacts.find(person => person.name.trim().toLowerCase() === name.trim().toLowerCase());
+
 app.post("/api/persons", (req, res) => {
   /** @type {{name: string, number: string}}*/
   const { name, number } = req.body;
@@ -59,13 +63,20 @@ app.post("/api/persons", (req, res) => {
     })
   }
 
+  const samePerson = isPersonExist(name);
+  if (samePerson) {
+    return res.status(400).json({
+      error: "name must be unique",
+      person: samePerson
+    })
+  }
+
   const person = {
     name, number, id: generateID(),
   }
 
   contacts.push(person);
   res.json(person);
-
 })
 
 
