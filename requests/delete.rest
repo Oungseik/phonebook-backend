@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/persons HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Min Aung Thu Win",
+    "number": "09-78366-8091"
+}
+
+
