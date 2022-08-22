@@ -1,12 +1,15 @@
 // @ts-check
 
 const express = require("express");
+const morgan = require("morgan");
 
 const { data } = require("./data.js");
 let contacts = data;
 
 const app = express();
+
 app.use(express.json());
+app.use(morgan("tiny"))
 
 app.get("/", (_req, res) => {
   res.send("<h1>Welcome to Phonebook Application");
